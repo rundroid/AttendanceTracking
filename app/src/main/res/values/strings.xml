@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Attendance Tracking System</string>
+    <string name="take_photo">Take photo</string>
+    <string name="record_login">Record in\nattendance</string>
+    <string name="record_logout">Record out\nattendance</string>
+    <string name="record_login_no_line">Record in attendance</string>
+    <string name="record_logout_no_line">Record out attendance</string>
+    <string name="report">Report</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="enrollment">Enrollment</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="settings">Settings</string>
+    <string name="enroll">Enroll</string>
+    <string name="use_large_model">Use FaceNet large model</string>
+    <string name="request_permission">Request permission</string>
+    <string name="cancel">Cancel</string>
+</resources>
