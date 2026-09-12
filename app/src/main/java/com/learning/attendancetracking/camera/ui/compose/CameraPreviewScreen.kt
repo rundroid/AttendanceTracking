@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -57,8 +58,11 @@ fun CameraPreviewScreen(
             *useCases.toTypedArray()
         )
         cameraPreviewViewModel.previewUseCase.surfaceProvider = previewView.surfaceProvider
-        val capabilities = ImageCapture.getImageCaptureCapabilities(cameraProvider.getCameraInfo(cameraxSelector))
+        val capabilities =
+            ImageCapture.getImageCaptureCapabilities(cameraProvider.getCameraInfo(cameraxSelector))
         currentCaptureCapabilitiesCallback(capabilities)
     }
-    AndroidView(factory = { previewView }, modifier = modifier)
+    AndroidView(factory = { previewView }, modifier = modifier.onSizeChanged { newSize ->
+        cameraPreviewViewModel.updateCanvasSize(newSize)
+    })
 }

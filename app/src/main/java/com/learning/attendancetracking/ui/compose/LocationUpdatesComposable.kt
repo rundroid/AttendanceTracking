@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.location.Address
 import android.location.Geocoder
+import android.location.Geocoder.GeocodeListener
 import android.location.Location
 import android.os.Build
 import android.os.Looper
@@ -67,12 +68,22 @@ fun LocationUpdatesComposable(
                         }
                     } else {
                         coroutineScope.launch {
-                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                                ?.getOrNull(0)?.let { address ->
-                                    if (isDisposed.not()) {
-                                        currentLocationChange.invoke(location, address)
-                                    }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                geocoder.getFromLocation(location.latitude,location.longitude,1
+                                ) {
+                                    it
                                 }
+                            } else {
+                                // For older versions, we can use the synchronous method
+                                // This is not recommended for production use as it can block the main thread
+                                @Suppress("DEPRECATION")
+                                geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                                    ?.getOrNull(0)?.let { address ->
+                                        if (isDisposed.not()) {
+                                            currentLocationChange.invoke(location, address)
+                                        }
+                                    }
+                            }
                         }
                     }
                 }

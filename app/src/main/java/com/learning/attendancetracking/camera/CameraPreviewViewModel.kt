@@ -353,6 +353,11 @@ class CameraPreviewViewModel @Inject constructor(
         }
     }
 
+    fun updateCanvasSize(newSize: IntSize) {
+        Timber.d("updateCanvasSize: newSize=%s", newSize)
+        canvasSize = newSize
+    }
+
     override fun onCleared() {
         super.onCleared()
         imageAnalyzerExecutor.shutdown()

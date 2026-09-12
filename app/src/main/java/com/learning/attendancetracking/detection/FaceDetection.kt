@@ -6,6 +6,7 @@ import android.graphics.Rect
 import android.graphics.RectF
 import androidx.compose.ui.unit.IntSize
 import com.google.mlkit.vision.face.Face
+import timber.log.Timber
 import kotlin.math.ceil
 
 fun Face.hasMaxOpenProbability(maxProbability: Float): Boolean {
@@ -59,9 +60,9 @@ fun calculateRect(
     val offsetY = (overlay.height.toFloat() - ceil(whenLandScapeModeHeight() * scale)) / 2.0f
 
     val mappedBox = RectF().apply {
-        left = boundingBox.right * scale + offsetX
+        left = boundingBox.left * scale + offsetX
         top = boundingBox.top * scale + offsetY
-        right = boundingBox.left * scale + offsetX
+        right = boundingBox.right * scale + offsetX
         bottom = boundingBox.bottom * scale + offsetY
     }
 
@@ -73,5 +74,9 @@ fun calculateRect(
             right = centerX - (right - centerX)
         }
     }
+    Timber.d(
+        "calculateRect: imageRect=%s, boundingBox=%s, overlay=%s, scaleX=%f, scaleY=%f, offsetX=%f, offsetY=%f, mappedBox=%s",
+        imageRect, boundingBox, overlay, scaleX, scaleY, offsetX, offsetY, mappedBox
+    )
     return mappedBox
 }
