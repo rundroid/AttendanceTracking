@@ -80,7 +80,6 @@ dependencies {
     implementation(libs.room)
     implementation(libs.room.ktx)
     implementation(libs.hilt.android)
-//    implementation(libs.hilt.compiler)
     implementation(libs.hilt.navigation)
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler)
